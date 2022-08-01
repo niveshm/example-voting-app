@@ -11,18 +11,18 @@ frontend:
   dev: ["python", "app.py"]
   system:
     dev:
-      port: 5000
+      port: 80
   
-worker:
-  type: backend
-  url_path: /worker
-  repo_path: worker
+# worker:
+#   type: backend
+#   url_path: /worker
+#   repo_path: worker
 
-result:
-  type: frontend
-  url_path: /result
-  repo_path: result
-  dev: ["nodemon", "server.js"]
-  sytem:
-    dev:
-      port: 5001
+# result:
+#   type: frontend
+#   url_path: /result
+#   repo_path: result
+#   dev: ["nodemon", "server.js"]
+#   sytem:
+#     dev:
+#       port: 5001
