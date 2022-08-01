@@ -5,7 +5,7 @@
 #   dev: [""]
 
 vote:
-  type: vote
+  type: frontend
   url_path: /vote
   repo_path: vote
   dev: ["python", "app.py"]
@@ -14,12 +14,12 @@ vote:
       port: 5000
   
 worker:
-  type: worker
+  type: backend
   url_path: /worker
   repo_path: worker
 
 result:
-  type: result
+  type: frontend
   url_path: /result
   repo_path: result
   dev: ["nodemon", "server.js"]
