@@ -4,7 +4,7 @@
 #   repo_path: ./
 #   dev: [""]
 
-vote:
+frontend:
   type: frontend
   url_path: /vote
   repo_path: vote
