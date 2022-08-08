@@ -1,0 +1,59 @@
+name: vote-application
+interfaces:
+  vote:
+    url: ${{ services.vote.interfaces.main.url }}
+    ingress:
+      subdomain: vote
+  result:
+    url: ${{ services.result.interfaces.main.url }}
+    ingress:
+      subdomain: result
+services:
+  vote:
+    build:
+      context: ./vote
+    command: python app.py
+    ${{ if architect.environment == 'local' }}:
+      volumes:
+        volume:
+          host_path: ./vote
+          mount_path: /app
+    interfaces:
+      main:
+        port: 80
+    reserved_name: vote
+  result:
+    build:
+      context: ./result
+    command: nodemon server.js
+    ${{ if architect.environment == 'local' }}:
+      volumes:
+        volume:
+          host_path: ./result
+          mount_path: /app
+    interfaces:
+      main:
+        port: 80
+      main2:
+        port: 5858
+    reserved_name: result
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.j
+    reserved_name: worker
+  redis:
+    image: redis:alpine
+    reserved_name: redis
+    interfaces:
+      main: 6379
+  db:
+    image: postgres:9.4
+    reserved_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ${{ if architect.environment == 'local' }}:
+      volumes:
+        volume:
+          mount_path: /var/lib/postgresql/data
